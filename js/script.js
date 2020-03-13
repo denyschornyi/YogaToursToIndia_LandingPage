@@ -79,20 +79,6 @@ window.addEventListener('DOMContentLoaded', function(){
                     minutes.textContent = "00";
                     seconds.textContent = "00";
                 }
-
-            //     if(t.total > 0){
-
-                    
-            //         if(t.hours <= 9){hours.textContent = "0" + t.hours;}else{hours.textContent = t.hours;}
-            //         if(t.minutes <= 9){minutes.textContent = "0" + t.minutes;}else{minutes.textContent = t.minutes;}
-            //         if(t.seconds <= 9){seconds.textContent = "0" + t.seconds;}else{seconds.textContent = t.seconds;}
-                    
-            //     }else if(t.total <= 0){
-                    // hours.textContent = "00";
-                    // minutes.textContent = "00";
-                    // seconds.textContent = "00";
-            //     }
-            // }
         }
     }
 
