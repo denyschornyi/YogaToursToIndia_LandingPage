@@ -88,7 +88,8 @@ window.addEventListener('DOMContentLoaded', function(){
 
     let  more = document.querySelector('.more'),
         overlay = document.querySelector('.overlay'),
-        close = document.querySelector('.popup-close');
+        close = document.querySelector('.popup-close'),
+        moreBtnTabs = document.querySelectorAll('.description-btn');
 
 
     more.addEventListener('click', function(){
@@ -103,6 +104,22 @@ window.addEventListener('DOMContentLoaded', function(){
         document.body.style.overflow = 'visible';
 
     });
+
+    moreBtnTabs.forEach(function(item){
+        item.addEventListener('click', function(){
+            overlay.style.display = 'block';
+            this.classList.add('more-splash');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+
+        
+   
+
+
+    
+
     
 });
 
