@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
     // TIMER
 
-    let dedline = '2020-03-13';
+    let dedline = '2020-03-14';
 
     function getTimeRemaining(endtime){
         let t = Date.parse(endtime) - Date.parse(new Date()),
@@ -64,21 +64,37 @@ window.addEventListener('DOMContentLoaded', function(){
             function updateClock(){
                 let t = getTimeRemaining(endtime);
 
-                if(t.total > 0){
-                    if(t.hours <= 9){hours.textContent = "0" + t.hours;}else{hours.textContent = t.hours;}
-                    if(t.minutes <= 9){minutes.textContent = "0" + t.minutes;}else{minutes.textContent = t.minutes;}
-                    if(t.seconds <= 9){seconds.textContent = "0" + t.seconds;}else{seconds.textContent = t.seconds;}
-                    
-                    if(t.total <= 0){
-                        clearInterval(timeInterval);
-                    }
-                }else if(t.total <= 0){
+                function addZero(num){
+                    if(num <= 9 )
+                        {return '0' + num;}
+                    else{return num;}
+                }
+
+                hours.textContent = addZero(t.hours);
+                minutes.textContent = addZero(t.minutes);
+                seconds.textContent = addZero(t.seconds);
+
+                if(t.total <= 0 ){
                     hours.textContent = "00";
                     minutes.textContent = "00";
                     seconds.textContent = "00";
                 }
-            }
+
+            //     if(t.total > 0){
+
+                    
+            //         if(t.hours <= 9){hours.textContent = "0" + t.hours;}else{hours.textContent = t.hours;}
+            //         if(t.minutes <= 9){minutes.textContent = "0" + t.minutes;}else{minutes.textContent = t.minutes;}
+            //         if(t.seconds <= 9){seconds.textContent = "0" + t.seconds;}else{seconds.textContent = t.seconds;}
+                    
+            //     }else if(t.total <= 0){
+                    // hours.textContent = "00";
+                    // minutes.textContent = "00";
+                    // seconds.textContent = "00";
+            //     }
+            // }
         }
+    }
 
         setClock('timer', dedline);
     
