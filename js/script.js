@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    // TIMER
+    // ------------------------ TIMER---------------
 
     let dedline = '2020-03-14';
 
@@ -84,7 +84,7 @@ window.addEventListener('DOMContentLoaded', function(){
     setClock('timer', dedline);
 
 
-    // MODAL WINDOW
+    // --------------------- MODAL WINDOW ----------------------
 
     let  more = document.querySelector('.more'),
         overlay = document.querySelector('.overlay'),
@@ -139,6 +139,36 @@ window.addEventListener('DOMContentLoaded', function(){
 //    }
 //    let block = new Options(200,200,"red",40,"center");
 //    block.createDiv();
+
+
+
+
+// -----------------   FORM HERE ----------------
+
+let message = {
+    loading: 'Loading...',
+    success: 'Thank you. We contact with you as soon, as possible.',
+    failure: 'Eror..'
+};
+
+let form = document.querySelector('.main-form'),
+    input = form.getElementsByTagName('input'),
+    statusMessage = document.createElement('div');
+
+    statusMessage.classList.add('status');
+
+form.addEventListener('submit', function(event){
+    event.preventDefault();
+    form.appendChild(statusMessage);
+
+    let request = new XMLHttpRequest();
+    request.open('POST', 'server.php');
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    let formData = new FormData(form)
+    request.send(form);
+
+});
     
 });
 
