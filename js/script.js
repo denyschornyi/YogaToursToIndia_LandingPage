@@ -160,81 +160,46 @@ let form = document.querySelector('.main-form'),
     statusMessage.classList.add('status');
 
 
-    
+    function sendToServer(e){
+        e.preventDefault();
+        this.appendChild(statusMessage);
 
-form.addEventListener('submit', function(event){ //--- MODAL FORM(submit for modal form) ----
-    event.preventDefault();
-    form.appendChild(statusMessage);
+        let input = this.getElementsByTagName('input');
 
-    let request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
-    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-    let formData = new FormData(form);
+        let formData = new FormData(this);
 
-    let obj = {};
+        let object = {};
 
-    formData.forEach(function(value , key){
-        obj[key] = value;           // Robymo z nashogo formData peretvoriuemo d format JSON
-    });
-    let json = JSON.stringify(obj);
+        formData.forEach(function(key,  value){
+            object[key] = value;
+        });
 
-    request.send(json);
+        let json = JSON.stringify(object);
+        request.send(json);
 
-    request.addEventListener('readystatechange', function(){
-        if(request.readyState < 4){
-            statusMessage.innerHTML = message.loading;
-        } else if(request.readyState === 4 && request.status == 200){
-            statusMessage.innerHTML = message.success;
-        }else{
-            statusMessage.innerHTML = message.failure;
+        request.addEventListener('readystatechange', function(){
+            if(request.readyState < 4){
+                statusMessage.innerHTML = message.loading;
+            }else if(request.readyState === 4 && request.status == 200){
+                statusMessage.innerHTML = message.success;
+            }else{
+            }
+        });
+
+        for(let i = 0; i < input.length; i++){
+            input[i].value = '';
         }
-    });
 
-    for(let i = 0; i < input.length; i++){
-        input[i].value = '';      // Here we are reset form after submit form
+
     }
 
-});
+form.addEventListener('submit', sendToServer);  //--- MODAL FORM(submit for modal form) ----
 
-
-
-contactForm.addEventListener('submit',function(event){//------CONTACT FORM(submit for contact form)-----
-    event.preventDefault();
-    contactForm.appendChild(statusMessage);
-
-    let request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
-    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-    let formData = new FormData(contactForm);
-
-    let object = {};
-
-    formData.forEach(function(value, key){
-        object[key] = value;
-    });
-    let json = JSON.stringify(object);
-
-    request.send(json);
-
-    request.addEventListener('readystatechange', function(){
-        if(request.readyState < 4){
-            statusMessage.innerHTML = message.loading;
-        }else if(request.readyState === 4 && request.status == 200 ){
-            statusMessage.innerHTML = message.success;
-        }else{
-            statusMessage.innerHTML = message.failure;
-        }
-    });
-
-    for(let i = 0; i < contactInput.length; i++){
-        contactInput[i].value = '';
-    }
-
-
-
-});
+contactForm.addEventListener('submit', sendToServer);//------CONTACT FORM(submit for contact form)-----
     
 });
 
