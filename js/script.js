@@ -152,12 +152,17 @@ let message = {
 };
 
 let form = document.querySelector('.main-form'),
+    contactForm = document.querySelector('#form'),
     input = form.getElementsByTagName('input'),
+    contactInput = contactForm.getElementsByTagName('input'),
     statusMessage = document.createElement('div');
 
     statusMessage.classList.add('status');
 
-form.addEventListener('submit', function(event){
+
+    
+
+form.addEventListener('submit', function(event){ //--- MODAL FORM(submit for modal form) ----
     event.preventDefault();
     form.appendChild(statusMessage);
 
@@ -187,8 +192,47 @@ form.addEventListener('submit', function(event){
     });
 
     for(let i = 0; i < input.length; i++){
-        input[i].value = '';
+        input[i].value = '';      // Here we are reset form after submit form
     }
+
+});
+
+
+
+contactForm.addEventListener('submit',function(event){//------CONTACT FORM(submit for contact form)-----
+    event.preventDefault();
+    contactForm.appendChild(statusMessage);
+
+    let request = new XMLHttpRequest();
+    request.open('POST', 'server.php');
+    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+    let formData = new FormData(contactForm);
+
+    let object = {};
+
+    formData.forEach(function(value, key){
+        object[key] = value;
+    });
+    let json = JSON.stringify(object);
+
+    request.send(json);
+
+    request.addEventListener('readystatechange', function(){
+        if(request.readyState < 4){
+            statusMessage.innerHTML = message.loading;
+        }else if(request.readyState === 4 && request.status == 200 ){
+            statusMessage.innerHTML = message.success;
+        }else{
+            statusMessage.innerHTML = message.failure;
+        }
+    });
+
+    for(let i = 0; i < contactInput.length; i++){
+        contactInput[i].value = '';
+    }
+
+
 
 });
     
