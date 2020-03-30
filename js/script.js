@@ -1,7 +1,5 @@
+'use strict';
 window.addEventListener('DOMContentLoaded', function(){
-
-    'use strict';
-
     let tab = document.querySelectorAll('.info-header-tab'),
         info = document.querySelector('.info-header'),
         tabContent = document.querySelectorAll('.info-tabcontent');
@@ -153,8 +151,6 @@ let message = {
 
 let form = document.querySelector('.main-form'),
     contactForm = document.querySelector('#form'),
-    input = form.getElementsByTagName('input'),
-    contactInput = contactForm.getElementsByTagName('input'),
     statusMessage = document.createElement('div');
 
     statusMessage.classList.add('status');
@@ -165,43 +161,56 @@ let form = document.querySelector('.main-form'),
         this.appendChild(statusMessage);
 
         let input = this.getElementsByTagName('input');
+       
+        function iWillKnowAjax(){
+            return new Promise(function(resolve, reject){
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-        let formData = new FormData(this);
-
-        let object = {};
-
-        formData.forEach(function(key,  value){
-            object[key] = value;
-        });
-
-        let json = JSON.stringify(object);
-        request.send(json);
-
-        request.addEventListener('readystatechange', function(){
-            if(request.readyState < 4){
-                statusMessage.innerHTML = message.loading;
-            }else if(request.readyState === 4 && request.status == 200){
-                statusMessage.innerHTML = message.success;
-            }else{
-            }
-        });
-
-        for(let i = 0; i < input.length; i++){
-            input[i].value = '';
+                let request = new XMLHttpRequest();
+                request.open('POST', 'server.php');
+                request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    
+                let formData = new FormData(this);
+    
+                let object = {};
+    
+                formData.forEach(function(key,  value){
+                    object[key] = value;
+                });
+    
+                let json = JSON.stringify(object);
+                request.send(json);
+    
+                request.onload = function(){
+                    if(request.readyState < 4){
+                        resolve();
+                    }else if(request.readyState === 4 && request.status == 200){
+                        resolve();
+                    }else{
+                        reject();
+                    }
+                };
+    
+                for(let i = 0; i < input.length; i++){
+                    input[i].value = '';
+                }
+           });
         }
-
-
+        iWillKnowAjax()
+            .then(() => statusMessage.innerHTML = message.loading)
+            .then(() => statusMessage.innerHTML = message.success)
+            .catch(() => statusMessage.innerHTML = message.failure);
     }
+
+    
 
 form.addEventListener('submit', sendToServer);  //--- MODAL FORM(submit for modal form) ----
 
 contactForm.addEventListener('submit', sendToServer);//------CONTACT FORM(submit for contact form)-----
-    
+ 
 });
+
+
 
 
 
