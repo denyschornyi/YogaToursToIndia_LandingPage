@@ -161,14 +161,15 @@ let form = document.querySelector('.main-form'),
         this.appendChild(statusMessage);
 
         let input = this.getElementsByTagName('input');
-       
-        function iWillKnowAjax(){
+        let formData = new FormData(this);
+
+        function postData(){
             return new Promise(function(resolve, reject){
                 let request = new XMLHttpRequest();
                 request.open('POST', 'server.php');
                 request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
                 
-                let formData = new FormData(this);
+                
                 let object = {};
                 formData.forEach(function(key,  value){
                     object[key] = value;
@@ -188,16 +189,18 @@ let form = document.querySelector('.main-form'),
                     }
                 };
                 request.send(json);
-    
-                for(let i = 0; i < input.length; i++){
-                    input[i].value = '';
-                }
            });
         }
-        iWillKnowAjax()
+        function clearInput(){
+            for(let i = 0; i < input.length; i++){
+                input[i].value = '';
+            }
+        }
+        postData(formData)
             .then(() => statusMessage.innerHTML = message.loading)
             .then(() => statusMessage.innerHTML = message.success)
-            .catch(() => statusMessage.innerHTML = message.failure);
+            .catch(() => statusMessage.innerHTML = message.failure)
+            .then(clearInput)
     }
 
     
