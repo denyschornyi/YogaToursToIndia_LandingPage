@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
     // ------------------------ TIMER---------------
 
-    let dedline = '2020-03-14';
+    let dedline = '2020-04-24';
 
     function getTimeRemaining(endtime){
         let t = Date.parse(endtime) - Date.parse(new Date()),
@@ -155,60 +155,61 @@ let form = document.querySelector('.main-form'),
 
     statusMessage.classList.add('status');
 
+    function sendToServer(item){
+        item.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            item.appendChild(statusMessage);
 
-    function sendToServer(e){
-        e.preventDefault();
-        this.appendChild(statusMessage);
+            let input = item.getElementsByTagName('input');
+            let formData = new FormData(item);
 
-        let input = this.getElementsByTagName('input');
-        let formData = new FormData(this);
-
-        function postData(){
-            return new Promise(function(resolve, reject){
-                let request = new XMLHttpRequest();
-                request.open('POST', 'server.php');
-                request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-                
-                
-                let object = {};
-                formData.forEach(function(key,  value){
-                    object[key] = value;
-                });
-    
-                let json = JSON.stringify(object);
-                console.log(json);
-                
-    
-                request.onload = function(){
-                    if(request.readyState < 4){
-                        resolve();
-                    }else if(request.readyState === 4 && request.status == 200){
-                        resolve();
-                    }else{
-                        reject();
-                    }
-                };
-                request.send(json);
-           });
-        }
-        function clearInput(){
-            for(let i = 0; i < input.length; i++){
-                input[i].value = '';
+            function postData(){
+                return new Promise(function(resolve, reject){
+                    let request = new XMLHttpRequest();
+                    request.open('POST', 'server.php');
+                    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                    
+                    
+                    let object = {};
+                    formData.forEach(function(key,  value){
+                        object[key] = value;
+                    });
+        
+                    let json = JSON.stringify(object);
+                    console.log(json);
+                    
+        
+                    request.onload = function(){
+                        if(request.readyState < 4){
+                            resolve();
+                        }else if(request.readyState === 4 && request.status == 200){
+                            resolve();
+                        }else{
+                            reject();
+                        }
+                    };
+                    request.send(json);
+            });
             }
+            function clearInput(){
+                for(let i = 0; i < input.length; i++){
+                    input[i].value = '';
+                }
+            }
+            postData(formData)
+                .then(() => statusMessage.innerHTML = message.loading)
+                .then(() => statusMessage.innerHTML = message.success)
+                .catch(() => statusMessage.innerHTML = message.failure)
+                .then(clearInput)
+            });
+            
         }
-        postData(formData)
-            .then(() => statusMessage.innerHTML = message.loading)
-            .then(() => statusMessage.innerHTML = message.success)
-            .catch(() => statusMessage.innerHTML = message.failure)
-            .then(clearInput)
-    }
 
     
 
-form.addEventListener('submit', sendToServer);  //--- MODAL FORM(submit for modal form) ----
-
-contact.addEventListener('submit', sendToServer);//------CONTACT FORM(submit for contact form)-----
- 
+    sendToServer(contact);
+    sendToServer(form);
 });
 
 
