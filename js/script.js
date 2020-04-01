@@ -141,7 +141,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
  
-// -----------------   FORM HERE ----------------
+// ----------------- FORM HERE ----------------
 
 let message = {
     loading: 'Loading...',
@@ -206,10 +206,53 @@ let form = document.querySelector('.main-form'),
             
         }
 
-    
-
     sendToServer(contact);
     sendToServer(form);
+
+
+
+
+    //---------------------------SLIDER HERE-----------------------//
+
+    let slideIndex = 1,
+        slides     = document.querySelectorAll('.slider-item'),
+        dotsWrap   = document.querySelector('.slider-dots')
+        dots       = document.querySelectorAll('.dot'),
+        prev       = document.querySelector('.prev'),
+        next       = document.querySelector('.next');
+
+    showSlide(slideIndex);
+
+    function showSlide(n){
+        if(n > slides.length){
+            slideIndex = 1;
+        }
+        
+        if(n < 1){
+            slideIndex = slides.length;
+        }
+        
+        slides.forEach((item) => item.style.display = 'none');
+        dots.forEach((item) => item.classList.remove('dot-active'));
+
+        slides[slideIndex - 1].style.display = 'block';
+        dots[slideIndex - 1].classList.add('dot-active');
+    }
+
+    function plusSlide(n){
+       showSlide(slideIndex += n);
+    }
+
+    function currentSlide(n){
+        showSlide(slideIndex = n);
+    }
+
+    prev.addEventListener('click', function(){
+        plusSlide(-1);
+    });
+    next.addEventListener('click', function(){
+        plusSlide(1);
+    });
 });
 
 
