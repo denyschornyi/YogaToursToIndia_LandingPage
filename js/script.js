@@ -1,8 +1,8 @@
 'use strict';
 window.addEventListener('DOMContentLoaded', function(){
-    let tab = document.querySelectorAll('.info-header-tab'),
-        info = document.querySelector('.info-header'),
-        tabContent = document.querySelectorAll('.info-tabcontent');
+    let tab         = document.querySelectorAll('.info-header-tab'),
+        info        = document.querySelector('.info-header'),
+        tabContent  = document.querySelectorAll('.info-tabcontent');
 
 
     function hideTabContent(a){
@@ -84,9 +84,9 @@ window.addEventListener('DOMContentLoaded', function(){
 
     // --------------------- MODAL WINDOW ----------------------
 
-    let  more = document.querySelector('.more'),
-        overlay = document.querySelector('.overlay'),
-        close = document.querySelector('.popup-close'),
+    let  more       = document.querySelector('.more'),
+        overlay     = document.querySelector('.overlay'),
+        close       = document.querySelector('.popup-close'),
         moreBtnTabs = document.querySelectorAll('.description-btn');
 
 
@@ -149,8 +149,8 @@ let message = {
     failure: 'Eror..'
 };
 
-let form = document.querySelector('.main-form'),
-    contact = document.querySelector('#form'),
+let form          = document.querySelector('.main-form'),
+    contact       = document.querySelector('#form'),
     statusMessage = document.createElement('div');
 
     statusMessage.classList.add('status');
@@ -216,8 +216,8 @@ let form = document.querySelector('.main-form'),
 
     let slideIndex = 1,
         slides     = document.querySelectorAll('.slider-item'),
-        dotsWrap   = document.querySelector('.slider-dots'),
         dots       = document.querySelectorAll('.dot'),
+        dotsWrap   = document.querySelector('.slider-dots'),
         prev       = document.querySelector('.prev'),
         next       = document.querySelector('.next');
 
@@ -227,40 +227,37 @@ let form = document.querySelector('.main-form'),
         if(n > slides.length){
             slideIndex = 1;
         }
-        
-        if(n < 1){
+        if(n<1){
             slideIndex = slides.length;
         }
 
-        slides.forEach((item) => item.style.display = 'none');
-        dots.forEach((item) => item.classList.remove('dot-active'));
+        slides.forEach(item => item.style.display = 'none');
+        dots.forEach(item => item.classList.remove('dot-active'));
 
-        slides[slideIndex - 1].style.display = 'block';
-        dots[slideIndex - 1].classList.add('dot-active');
+        slides[slideIndex-1].style.display = 'block';
+        dots[slideIndex-1].classList.add('dot-active');
     }
 
-    function plusSlide(n){
-       showSlide(slideIndex += n);
+    function changeSlide(n){
+        showSlide(slideIndex += n);
     }
 
     function currentSlide(n){
         showSlide(slideIndex = n);
     }
 
-    prev.addEventListener('click', () => {
-        plusSlide(-1);
-    });
-    next.addEventListener('click', () => {
-        plusSlide(1);
-    });
+    next.addEventListener('click', () => {changeSlide(1)});
+    prev.addEventListener('click', () => {changeSlide(-1)});
 
-    dotsWrap.addEventListener('click', (event) => {
+    dotsWrap.addEventListener('click' , (event) => {
         for(let i = 0; i < dots.length + 1; i++){
-            if(event.target.classList.contains('dot') && event.target == dots[i - 1]){
+            if(event.target.classList.contains('dot') && event.target == dots[i-1]){
                 currentSlide(i);
             }
         }
     });
+
+
 });
 
 
