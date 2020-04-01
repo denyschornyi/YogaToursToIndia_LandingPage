@@ -216,7 +216,7 @@ let form = document.querySelector('.main-form'),
 
     let slideIndex = 1,
         slides     = document.querySelectorAll('.slider-item'),
-        dotsWrap   = document.querySelector('.slider-dots')
+        dotsWrap   = document.querySelector('.slider-dots'),
         dots       = document.querySelectorAll('.dot'),
         prev       = document.querySelector('.prev'),
         next       = document.querySelector('.next');
@@ -231,7 +231,7 @@ let form = document.querySelector('.main-form'),
         if(n < 1){
             slideIndex = slides.length;
         }
-        
+
         slides.forEach((item) => item.style.display = 'none');
         dots.forEach((item) => item.classList.remove('dot-active'));
 
@@ -247,11 +247,19 @@ let form = document.querySelector('.main-form'),
         showSlide(slideIndex = n);
     }
 
-    prev.addEventListener('click', function(){
+    prev.addEventListener('click', () => {
         plusSlide(-1);
     });
-    next.addEventListener('click', function(){
+    next.addEventListener('click', () => {
         plusSlide(1);
+    });
+
+    dotsWrap.addEventListener('click', (event) => {
+        for(let i = 0; i < dots.length + 1; i++){
+            if(event.target.classList.contains('dot') && event.target == dots[i - 1]){
+                currentSlide(i);
+            }
+        }
     });
 });
 
