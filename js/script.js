@@ -257,6 +257,19 @@ let form          = document.querySelector('.main-form'),
         }
     });
 
+    //---------------------------CALCULATOR HERE-----------------------//
+
+    let persons     = document.querySelectorAll('.counter-block-input')[0],
+        restDays    = document.querySelectorAll('.counter-block-input')[1],
+        place       = document.getElementById('select'),
+        totalValue  = document.getElementById('total'),
+        personsSum  = 0,
+        daysSum     = 0,
+        total       = 0;
+
+        totalValue.textContent = 0;
+
+
 
 });
 
