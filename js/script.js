@@ -269,20 +269,20 @@ let form          = document.querySelector('.main-form'),
 
         totalValue.textContent = 0;
 
-        persons.addEventListener('input', function(){
+        persons.addEventListener('change', function(){
             personsSum = +this.value;
             total = (daysSum + personsSum) * 4000;
-            if(restDays.value == ''){
+            if(restDays.value == '' || persons.value == ''){
                 totalValue.textContent = 0;
             }else{
                 totalValue.innerHTML = total;
             }
         });
 
-        restDays.addEventListener('input', function(){
+        restDays.addEventListener('change', function(){
             daysSum = +this.value;
             total = (daysSum + personsSum) * 4000;
-            if(persons.value == ''){
+            if(restDays.value == '' || persons.value == ''){
                 totalValue.textContent = 0;
             }else{
                 totalValue.innerHTML = total;
