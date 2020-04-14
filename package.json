@@ -1,0 +1,23 @@
+{
+  "name": "yoga_tours",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denyschornyi/Yoga_tours_to_India.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denyschornyi/Yoga_tours_to_India/issues"
+  },
+  "homepage": "https://github.com/denyschornyi/Yoga_tours_to_India#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}

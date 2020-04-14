@@ -9,4 +9,12 @@ window.addEventListener('DOMContentLoaded', function(){
         timer   = require('./parts/timer');
     
 
+    calc();
+    form();
+    modal();
+    slider();
+    tabs();
+    timer();
+    
+
 });
