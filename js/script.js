@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function(){
 
     'use strict';
-
+    //-------------TABS-----------
     let tab = document.querySelectorAll('.info-header-tab'),
         info = document.querySelector('.info-header'),
         tabContent = document.querySelectorAll('.info-tabcontent');
@@ -112,37 +112,7 @@ window.addEventListener('DOMContentLoaded', function(){
             document.body.style.overflow = 'hidden';
         });
     });
-    
-    
-        
-//    class Options{
-//        constructor(height, width, bg, fontSize, textAlign){
-//             this.height = height;
-//             this.width = width;
-//             this.bg = bg;
-//             this.fontSize = fontSize;
-//             this.textAlign = textAlign;
-//        }
 
-//         createDiv() {
-//             let div = document.createElement('div');
-//             div.textContent = 'lorem lorem lorem babah';
-//             div.style.cssText = `height: ${this.height}px;
-//                                 width: ${this.width}px;
-//                                 background: ${this.bg};
-//                                 font-size: ${this.fontSize}px;
-//                                 text-align: ${this.textAlign};`;
-//             document.body.appendChild(div);
-//         }
-
-        
-//    }
-//    let block = new Options(200,200,"red",40,"center");
-//    block.createDiv();
-
-
-
- 
 // -----------------   FORM HERE ----------------
 
 let message = {
@@ -162,39 +132,50 @@ let form = document.querySelector('.main-form'),
 
     function sendToServer(e){
         e.preventDefault();
-        this.appendChild(statusMessage);
+        
+        return new Promise(function(resolve, reject){
+            this.appendChild(statusMessage);
 
-        let input = this.getElementsByTagName('input');
+            let input = this.getElementsByTagName('input');
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            let request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-        let formData = new FormData(this);
+            let formData = new FormData(this);
 
-        let object = {};
+            let object = {};
 
-        formData.forEach(function(key,  value){
-            object[key] = value;
-        });
+            formData.forEach(function(key,  value){
+                object[key] = value;
+            });
 
-        let json = JSON.stringify(object);
-        request.send(json);
+            let json = JSON.stringify(object);
+            request.send(json);
 
-        request.addEventListener('readystatechange', function(){
-            if(request.readyState < 4){
-                statusMessage.innerHTML = message.loading;
-            }else if(request.readyState === 4 && request.status == 200){
-                statusMessage.innerHTML = message.success;
-            }else{
+            request.onload() =  function(){
+                if(request.readyState < 4){
+                    resolve();
+                }else if(request.readyState === 4 && request.status == 200){
+                    resolve();
+                }else{
+                    reject();
+                }
+            };
+
+            for(let i = 0; i < input.length; i++){
+                input[i].value = '';
             }
+            sendToServer()
+            .then(() => {
+                console.log("work");
+                statusMessage.innerHTML = message.loading;})
+            .then(() => {statusMessage.innerHTML = message.success;})
+            .catch(() => {statusMessage.innerHTML = message.failure;});
+
         });
 
-        for(let i = 0; i < input.length; i++){
-            input[i].value = '';
-        }
-
-
+        
     }
 
 form.addEventListener('submit', sendToServer);  //--- MODAL FORM(submit for modal form) ----
